@@ -12,7 +12,7 @@ export const dataGeneralSidebar = [
     {
         icon:PanelsTopLeft ,
         label:"Dashboard",
-        href:"/"
+        href:"/dashboard"
     },
     {
         icon:Building2 ,
@@ -21,7 +21,7 @@ export const dataGeneralSidebar = [
     },
     {
         icon: Calendar,
-        label:"/Calendar",
+        label:"Calendar",
         href:"/task"
     }
 ]    
