@@ -15,26 +15,6 @@ export function LastCustomers() {
          </div>
     )
 }
-/*
-import React from 'react';
-import { Building } from "lucide-react";
-import { CustomIcon } from "@/components/CustomIcon";
-import { CustomersTable } from "../CustomersTable";
 
-export function LastCustomers() {
-    return (
-        <div className="p-5 rounded-lg shadow-sm bg-background">
-            <div className="flex items-center mb-4">
-                <div className="w-12 h-12 mr-4 flex items-center justify-center rounded-lg bg-blue-500 text-white">
-                    <CustomIcon icon={Building} />
-                </div>
-                <p className="text-xl font-bold">LAST CUSTOMER</p>
-            </div>
-            <div>
-                <CustomersTable />
-            </div>
-        </div>
-    );
-}*/
 
 
