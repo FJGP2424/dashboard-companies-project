@@ -11,7 +11,7 @@ export function GraphicSuscribers() {
         <div className="mt-5">
             <p className="text-3xl mb-3"> 24.479</p>
             <div className="flex gap-x-5 mb-5">
-                <div className="flex items-center gap-2 px-3 text-md bg-[#16C8C7] text-white rounded-xl w-fit">
+                <div className="flex items-center gap-2 px-3 text-md bg-[#2f7a20] text-white rounded-xl w-fit">
                     8,5%
                     <TrendingUp strokeWidth={1} className="h-4 w-4" />
                 </div>
@@ -27,12 +27,12 @@ export function GraphicSuscribers() {
                 >
                         <defs>
                             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#887CFD" stopOpacity={0.8} />
-                                <stop offset="5%" stopColor="#887CFD" stopOpacity={0.8} />
+                                <stop offset="5%" stopColor="#F08080" stopOpacity={0.5} />
+                                <stop offset="95%" stopColor="#F08080" stopOpacity={0} />
                             </linearGradient>
                             <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.5} />
+                                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
                             </linearGradient>
                         </defs>
                         <XAxis dataKey="year" />
@@ -41,7 +41,7 @@ export function GraphicSuscribers() {
                         <Area
                             type="monotone"
                             dataKey="newCustomers"
-                            stroke="#887CFD"
+                            stroke="#F08080"
                             fillOpacity={1}
                             fill="url(#colorUv)"
                         />
