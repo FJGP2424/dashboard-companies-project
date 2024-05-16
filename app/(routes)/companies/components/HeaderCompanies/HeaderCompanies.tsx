@@ -14,6 +14,7 @@ import {
   } from "@/components/ui/alert-dialog"
   import { CirclePlus } from "lucide-react"
   import { useState } from "react"
+import { FormCreateCustomer } from "../FormCreateCustomer"
     
 
 export function HeaderCompanies() {
@@ -35,6 +36,8 @@ export function HeaderCompanies() {
                             Create and configure your customer
                         </AlertDialogDescription>
                     </AlertDialogHeader>
+                    
+                    <FormCreateCustomer setOpenModalCreate={setOpenModalCreate} />
                 </AlertDialogContent>
             </AlertDialog>
         </div>
