@@ -2,57 +2,69 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { useState } from "react"
 import { z } from "zod"
+
 
 import { Button } from "@/components/ui/button"
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { FormCreateCustomerProps } from "./FormCreateCustomer.types"
-import { useState } from "react"
-import { Select, SelectItem, SelectValue } from "@radix-ui/react-select"
-import { SelectContent, SelectTrigger } from "@/components/ui/select"
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { UploadButton } from "@/utils/uploadthing"
+import { toast } from "@/components/ui/use-toast"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-  name: z.string(),
-  country: z.string().min(2),
-  website: z.string().min(2),
-  phone: z.string().min(6),
-  cif: z.string().min(6),
-  profileImage: z.string()
+    name: z.string(),
+    country: z.string().min(2),
+    website: z.string().min(2),
+    phone: z.string().min(6),
+    cif: z.string().min(6),
+    profileImage: z.string()
 })
 
-
 export function FormCreateCustomer(props: FormCreateCustomerProps) {
-
     const { setOpenModalCreate } = props
+    const router = useRouter()
     const [photoUploaded, setPhotoUploaded] = useState(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-          name: "",
-          country:"",
-          website:"",
-          phone:"",
-          cif:"",
-          profileImage: ""
+            name: "",
+            country: "",
+            website: "",
+            phone: "",
+            cif: "",
+            profileImage: ""
         },
-      })
+    })
 
-      const{isValid} = form.formState
-     
-      
-      const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values)
-      }
+    const { isValid } = form.formState
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {           
+            toast({ title: "Company created" })
+            router.refresh()
+            setOpenModalCreate(false)
+        } catch (error) {
+            toast({
+                title: "Something went wrong",
+                variant: "destructive"
+            })
+        }
+    }
+
     return (
         <div>
             <Form {...form}>
@@ -67,6 +79,7 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
                                     <FormControl>
                                         <Input placeholder="Company name..." type="text" {...field} />
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
@@ -78,7 +91,7 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
                                     <FormLabel>Country</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
-                                        defaultValue="field.value"
+                                        defaultValue={field.value}
                                     >
                                         <FormControl>
                                             <SelectTrigger>
@@ -86,38 +99,40 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            <SelectItem value="united-kingdom">United Kingdom</SelectItem>
                                             <SelectItem value="spain">Spain</SelectItem>
+                                            <SelectItem value="united-kingdom">United Kingdom</SelectItem>
                                             <SelectItem value="portugal">Portugal</SelectItem>
-                                            <SelectItem value="italy">Italy</SelectItem>
-                                            <SelectItem value="germany">Germany</SelectItem>
+                                            <SelectItem value="germany">Alemania</SelectItem>
+                                            <SelectItem value="italia">Italia</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                         <FormField
+                        <FormField
                             control={form.control}
                             name="website"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Website</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="www.fernandogregorio.com" type="text" {...field} />
+                                        <Input placeholder="www.rafatarrega.com" type="text" {...field} />
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
-                         <FormField
+                        <FormField
                             control={form.control}
                             name="phone"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Phone</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="+34 665 550 550" type="number" {...field} />
+                                        <Input placeholder="+34 665 55 55 55" type="number" {...field} />
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
@@ -128,8 +143,9 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
                                 <FormItem>
                                     <FormLabel>CIF</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="B-1234567" type="number" {...field} />
+                                        <Input placeholder="B-1234567" type="text" {...field} />
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
@@ -140,13 +156,35 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
                                 <FormItem>
                                     <FormLabel>Profile Image</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="B-1234567" type="number" {...field} />
+                                        {photoUploaded ? (
+                                            <p className="text-sm">Image uploaded!</p>
+                                        ) : (
+                                            <UploadButton
+                                                className="rounded-lg bg-slate-600/20 text-slate-800 outline-dotted outline-3"
+                                                {...field}
+                                                endpoint="profileImage"
+                                                onClientUploadComplete={(res) => {
+                                                    form.setValue("profileImage", res?.[0].url)
+                                                    toast({
+                                                        title: "Photo uploaded!"
+                                                    })
+                                                    setPhotoUploaded(true)
+                                                }}
+                                                onUploadError={(error: Error) => {
+                                                    toast({
+                                                        title: "Error uploading photo"
+                                                    })
+                                                }}
+                                            />
+                                        )}
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
+
                     </div>
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" disabled={!isValid}>Submit</Button>
                 </form>
             </Form>
         </div>
