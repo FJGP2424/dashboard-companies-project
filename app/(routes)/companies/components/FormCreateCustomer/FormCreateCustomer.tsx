@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { z } from "zod"
+import axios from "axios"
 
 
 import { Button } from "@/components/ui/button"
@@ -54,13 +55,14 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {           
-            toast({ title: "Company created" })
+            axios.post("/api/company", values)
+            toast({title: "Company created"})
             router.refresh()
             setOpenModalCreate(false)
         } catch (error) {
             toast({
                 title: "Something went wrong",
-                variant: "destructive"
+                variant: "destructive",
             })
         }
     }
