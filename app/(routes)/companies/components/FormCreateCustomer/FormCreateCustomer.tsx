@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { z } from "zod"
-import axios from "axios"
+import axios from 'axios'
 
 
 import { Button } from "@/components/ui/button"
@@ -119,7 +119,7 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
                                 <FormItem>
                                     <FormLabel>Website</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="www.rafatarrega.com" type="text" {...field} />
+                                        <Input placeholder="www.fernandogregorio.com" type="text" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

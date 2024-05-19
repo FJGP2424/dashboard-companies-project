@@ -1,15 +1,17 @@
-import {redirect} from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import {auth} from "@clerk/nextjs"
+import { auth } from '@clerk/nextjs'
 
-import { db } from "@/lib/db"
+import { db } from '@/lib/db'
 
+import { DataTable } from './data-table'
 
+import { columns } from './columns'
 
-export async function ListCompanies () {
+export async function ListCompanies() {
     const { userId } = auth()
 
-    if(!userId) {
+    if (!userId) {
         return redirect("/")
     }
 
@@ -17,14 +19,14 @@ export async function ListCompanies () {
         where: {
             userId,
         },
-        orderBy:{
+        orderBy: {
             createdAt: "desc"
         }
     })
 
-    console.log(companies);
 
-    return(
-        <div> List companies</div>
+
+    return (
+        <DataTable columns={columns} data={companies} />
     )
 }
