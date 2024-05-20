@@ -109,7 +109,7 @@ export function CompanyForm(props: CompanyFormProps) {
                             <FormItem>
                                 <FormLabel>Website</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="www.rafatarrega.com" type="text" {...field} />
+                                    <Input placeholder="www.fernandogregorio.com" type="text" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
