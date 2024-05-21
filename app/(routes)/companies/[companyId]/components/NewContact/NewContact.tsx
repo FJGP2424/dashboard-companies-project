@@ -24,4 +24,4 @@ export function NewContact() {
                 <FormContact setOpen={setOpen} />
             </DialogContent>
         </Dialog>
-    
+    )}
